@@ -793,6 +793,20 @@ describe("jQuery matchers", function() {
       expect($('#clickme')).not.toHandle("click");
       expect($('#clickme').get(0)).not.toHandle("click");
     });
+    
+    it('should pass if the event is namespaced', function() {
+      var handler = function(){ }; // noop
+      $('#clickme').bind("click.test_namespace", handler);
+      expect($('#clickme')).toHandle("click.test_namespace");
+      expect($('#clickme').get(0)).toHandle("click.test_namespace");
+    });
+    
+    it('should pass if the event has multiple namespaces', function() {
+      var handler = function(){ }; // noop
+      $('#clickme').bind("click.test_namespace.another.event", handler);
+      expect($('#clickme')).toHandle("click.test_namespace.another.event");
+      expect($('#clickme').get(0)).toHandle("click.test_namespace.another.event");
+    });
 
   });
   
